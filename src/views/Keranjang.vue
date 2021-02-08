@@ -1,6 +1,6 @@
 <template>
   <div class="keranjang">
-    <Navbar :updateKeranjang="keranjangs"/>
+    <Navbar :updateKeranjang="keranjangs" />
     <div class="container">
       <div class="row mt-5">
         <div class="col">
@@ -80,6 +80,33 @@
           </div>
         </div>
       </div>
+
+      <!-- Form Checkout -->
+      <div class="row justify-content-end">
+        <div class="col-md-4">
+          <form action="" method="post" class="mt-4" v-on:submit.prevent>
+            <div class="form-group">
+              <label for="jmlPesan">Nama Pemesan</label>
+              <input
+                type="text"
+                class="form-control"
+                v-model="pesanan.nama"
+              />
+            </div>
+            <div class="form-group">
+              <label for="keterangan">Nomor Meja</label>
+              <input
+                type="number"
+                class="form-control"
+                v-model="pesanan.NoMeja"
+              />
+            </div>
+            <button type="submit" class="btn btn-success float-right" @click="checkout()">
+               Checkout
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +122,7 @@ export default {
   data() {
     return {
       keranjangs: [],
+      pesanan: {},
     };
   },
   methods: {
@@ -114,6 +142,47 @@ export default {
           });
         })
         .catch((error) => console.log("Gagal: ", error));
+    },
+    checkout(){
+      if (this.keranjangs.length > 0) {
+        if (this.pesanan.nama && this.pesanan.NoMeja) {
+          this.pesanan.keranjangs = this.keranjangs;
+          axios
+        .post("http://localhost:3000/pesanans/",this.pesanan)
+        .then(() => {
+          // hapus semua keranjang
+          this.keranjangs.map(function(item) {
+           return axios
+              .delete("http://localhost:3000/keranjangs/" + item.id)
+              .catch((error) => console.log("Gagal: ", error));
+          })
+
+          this.$router.push({path:"/pesanan-success"})
+          this.$toast.success("Succes di pesan", {
+            type: "success",
+            position: "top-right",
+            duration: 5000,
+            dismissible: true,
+          });
+        })
+        .catch((error) => console.log("Gagal: ", error));
+          
+        } else {
+          this.$toast.error("Nama dan Nomer Meja harus di isi", {
+            type: "error",
+            position: "top-right",
+            duration: 5000,
+            dismissible: true,
+          });
+        }        
+      }else{
+        this.$toast.error("Harap Pilih produk terlebih dahulu", {
+            type: "error",
+            position: "top-right",
+            duration: 5000,
+            dismissible: true,
+          });
+      }
     },
     getKeranjang() {
       axios

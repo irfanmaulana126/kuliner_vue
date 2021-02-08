@@ -100,5 +100,26 @@
     }
   ],
   "keranjangs": [],
-  "pesanans": []
+  "pesanans": [
+    {
+      "nama": "irfan maulana",
+      "NoMeja": "1",
+      "keranjangs": [
+        {
+          "jumlah": "1",
+          "keterangan": "pedas",
+          "products": {
+            "id": 1,
+            "kode": "K-01",
+            "nama": "Sate Ayam",
+            "harga": 16000,
+            "is_ready": true,
+            "gambar": "sate-ayam.jpg"
+          },
+          "id": 1
+        }
+      ],
+      "id": 1
+    }
+  ]
 }

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Foods from '../views/Food.vue'
 import FoodsDetail from '../views/FoodDetail.vue'
 import Keranjang from '../views/Keranjang.vue'
+import PesananSuccess from '../views/PesananSuccess.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/keranjang',
     name: 'Keranjang',
     component: Keranjang
+  },
+  {
+    path: '/pesanan-success',
+    name: 'PesananSuccess',
+    component: PesananSuccess
   },
   {
     path: '/about',
